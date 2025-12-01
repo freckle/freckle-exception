@@ -1,5 +1,9 @@
-## [_Unreleased_](https://github.com/freckle/haskell-library-template/compare/v__...main)
+## [_Unreleased_](https://github.com/freckle/freckle-exception/compare/freckle-exception-v0.0.0.1...main)
 
-## [v0.0.0.0](https://github.com/freckle/haskell-library-template/tree/v0.0.0.0)
+## [v0.0.0.1](https://github.com/freckle/freckle-app/tree/freckle-exception-v0.0.0.1/freckle-exception)
 
-First tagged release.
+Metadata change only; moved source repository.
+
+## [v0.0.0.0](https://github.com/freckle/freckle-app/tree/freckle-exception-v0.0.0.0/freckle-exception)
+
+First release, sprouted from `freckle-app-1.20.0.1`.
