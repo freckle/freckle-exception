@@ -5,12 +5,12 @@ cabal-version: 1.18
 -- see: https://github.com/sol/hpack
 
 name:           freckle-exception
-version:        0.0.0.1
+version:        0.0.0.2
 synopsis:       Some extensions to the annotated-exception library
 description:    Please see README.md
 category:       Exceptions
-homepage:       https://github.com/freckle/freckle-app#readme
-bug-reports:    https://github.com/freckle/freckle-app/issues
+homepage:       https://github.com/freckle/freckle-exception#readme
+bug-reports:    https://github.com/freckle/freckle-exception/issues
 maintainer:     Freckle Education
 license:        MIT
 license-file:   LICENSE
@@ -23,7 +23,7 @@ extra-doc-files:
 
 source-repository head
   type: git
-  location: https://github.com/freckle/freckle-app
+  location: https://github.com/freckle/freckle-exception
 
 library
   exposed-modules:
