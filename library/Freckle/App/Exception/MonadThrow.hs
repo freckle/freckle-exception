@@ -20,40 +20,38 @@ module Freckle.App.Exception.MonadThrow
   , module Freckle.App.Exception.Types
   ) where
 
-import Freckle.App.Exception.Types
-
 import Control.Applicative (pure)
 import Control.Exception.Annotated (checkpoint, checkpointMany)
+import Control.Exception.Annotated qualified as Annotated
 import Control.Monad (void)
 import Control.Monad.Catch (MonadCatch, MonadMask, MonadThrow)
+import Control.Monad.Catch qualified
 import Data.Either (Either (..))
 import Data.Function (($), (.))
 import Data.Functor (fmap, (<$>))
 import Data.Maybe (Maybe, maybe)
 import Data.String (String)
+import Freckle.App.Exception.Types
 import GHC.IO.Exception (userError)
 import GHC.Stack (withFrozenCallStack)
 
-import Control.Exception.Annotated qualified as Annotated
-import Control.Monad.Catch qualified
-
 -- Throws an exception, wrapped in 'AnnotatedException' which includes a call stack
-throwM :: forall e m a. (Exception e, MonadThrow m, HasCallStack) => e -> m a
+throwM :: forall e m a. (Exception e, HasCallStack, MonadThrow m) => e -> m a
 throwM e = withFrozenCallStack $ Annotated.throw e
 
-throwString :: forall m a. (MonadThrow m, HasCallStack) => String -> m a
+throwString :: forall m a. (HasCallStack, MonadThrow m) => String -> m a
 throwString s = withFrozenCallStack $ throwM $ userError s
 
 fromJustNoteM
-  :: forall m a. (MonadThrow m, HasCallStack) => String -> Maybe a -> m a
+  :: forall m a. (HasCallStack, MonadThrow m) => String -> Maybe a -> m a
 fromJustNoteM err = withFrozenCallStack $ maybe (throwString err) pure
 
-impossible :: forall m a. (MonadThrow m, HasCallStack) => m a
+impossible :: forall m a. (HasCallStack, MonadThrow m) => m a
 impossible = withFrozenCallStack $ throwString "Impossible"
 
 catch
   :: forall e m a
-   . (Exception e, MonadCatch m, HasCallStack)
+   . (Exception e, HasCallStack, MonadCatch m)
   => m a
   -> (e -> m a)
   -> m a
@@ -61,7 +59,7 @@ catch action handler = withFrozenCallStack $ Annotated.catch action handler
 
 catchJust
   :: forall e b m a
-   . (Exception e, MonadCatch m, HasCallStack)
+   . (Exception e, HasCallStack, MonadCatch m)
   => (e -> Maybe b)
   -> m a
   -> (b -> m a)
@@ -72,7 +70,7 @@ catchJust test action handler =
 
 catches
   :: forall m a
-   . (MonadCatch m, HasCallStack)
+   . (HasCallStack, MonadCatch m)
   => m a
   -- ^ Action to run
   -> [ExceptionHandler m a]
@@ -80,14 +78,14 @@ catches
   --   with a type of either @e@ or @'AnnotatedException' e@
   -> m a
 catches action handlers =
-  withFrozenCallStack $
-    Annotated.catches
+  withFrozenCallStack
+    $ Annotated.catches
       action
       (fmap (\case (ExceptionHandler f) -> Annotated.Handler f) handlers)
 
 try
   :: forall e m a
-   . (Exception e, MonadCatch m, HasCallStack)
+   . (Exception e, HasCallStack, MonadCatch m)
   => m a
   -- ^ Action to run
   -> m (Either e a)
@@ -97,7 +95,7 @@ try action = withFrozenCallStack $ Annotated.try action
 
 tryJust
   :: forall e b m a
-   . (Exception e, MonadCatch m, HasCallStack)
+   . (Exception e, HasCallStack, MonadCatch m)
   => (e -> Maybe b)
   -> m a
   -- ^ Action to run
@@ -108,7 +106,7 @@ tryJust test action =
 
 withException
   :: forall e a m b
-   . (Exception e, MonadCatch m, HasCallStack)
+   . (Exception e, HasCallStack, MonadCatch m)
   => m a
   -> (e -> m b)
   -> m a
@@ -121,7 +119,7 @@ withException action onException =
 --   apply this function to augment its exceptions with call stacks.
 checkpointCallStack
   :: forall m a
-   . (MonadCatch m, HasCallStack)
+   . (HasCallStack, MonadCatch m)
   => m a
   -- ^ Action that might throw whatever types of exceptions
   -> m a

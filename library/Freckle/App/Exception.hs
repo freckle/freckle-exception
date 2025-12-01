@@ -2,7 +2,7 @@ module Freckle.App.Exception
   ( -- * Re-export of our current preferred implementation module
 
     -- | Currently 'MonadUnliftIO'-based
-      module Freckle.App.Exception.MonadUnliftIO
+    module Freckle.App.Exception.MonadUnliftIO
 
     -- * Helpers that are agnostic to either implementation
   , annotatedExceptionMessage
