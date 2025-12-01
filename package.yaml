@@ -1,8 +1,8 @@
 name: freckle-exception
-version: 0.0.0.1
+version: 0.0.0.2
 maintainer: Freckle Education
 category: Exceptions
-github: freckle/freckle-app
+github: freckle/freckle-exception
 synopsis: Some extensions to the annotated-exception library
 description: Please see README.md
 
