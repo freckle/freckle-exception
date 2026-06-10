@@ -1,5 +1,10 @@
 ## [_Unreleased_](https://github.com/freckle/freckle-exception/compare/freckle-exception-v0.0.0.2...main)
 
+## [v0.0.1.0](https://github.com/freckle/freckle-exception/compare/v0.0.0.2...v0.0.1.0)
+
+* Add `Hspec.AnnotatedException` module for rendering test failure exceptions
+  with annotations
+
 ## [v0.0.0.2](https://github.com/freckle/freckle-exception/compare/v0.0.0.1...v0.0.0.2)
 
 Metadata change only; moved source repository.
