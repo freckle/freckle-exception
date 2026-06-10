@@ -1,6 +1,6 @@
 cabal-version: 1.18
 
--- This file has been generated from package.yaml by hpack version 0.38.1.
+-- This file has been generated from package.yaml by hpack version 0.39.1.
 --
 -- see: https://github.com/sol/hpack
 
@@ -31,6 +31,7 @@ library
       Freckle.App.Exception.MonadThrow
       Freckle.App.Exception.MonadUnliftIO
       Freckle.App.Exception.Types
+      Freckle.App.Test.Hspec.AnnotatedException
   other-modules:
       Paths_freckle_exception
   hs-source-dirs:
@@ -48,12 +49,47 @@ library
       TypeFamilies
   ghc-options: -fignore-optim-changes -fwrite-ide-info -Weverything -Wno-all-missed-specialisations -Wno-missing-exported-signatures -Wno-missing-import-lists -Wno-missing-kind-signatures -Wno-missing-local-signatures -Wno-missing-safe-haskell-mode -Wno-monomorphism-restriction -Wno-prepositive-qualified-module -Wno-safe -Wno-unsafe
   build-depends:
-      aeson
+      HUnit
+    , aeson
     , annotated-exception
     , base <5
     , exceptions
+    , hspec
     , monad-logger-aeson
+    , prettyprinter
+    , text
     , unliftio
+  default-language: GHC2021
+  if impl(ghc >= 9.8)
+    ghc-options: -Wno-missing-role-annotations -Wno-missing-poly-kind-signatures
+
+test-suite spec
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Freckle.App.Test.Hspec.AnnotatedExceptionSpec
+      Paths_freckle_exception
+  hs-source-dirs:
+      tests
+  default-extensions:
+      DataKinds
+      DeriveAnyClass
+      DerivingVia
+      DerivingStrategies
+      GADTs
+      LambdaCase
+      NoImplicitPrelude
+      NoMonomorphismRestriction
+      OverloadedStrings
+      TypeFamilies
+  ghc-options: -fignore-optim-changes -fwrite-ide-info -Weverything -Wno-all-missed-specialisations -Wno-missing-exported-signatures -Wno-missing-import-lists -Wno-missing-kind-signatures -Wno-missing-local-signatures -Wno-missing-safe-haskell-mode -Wno-monomorphism-restriction -Wno-prepositive-qualified-module -Wno-safe -Wno-unsafe -threaded -rtsopts "-with-rtsopts=-N"
+  build-depends:
+      HUnit
+    , annotated-exception
+    , base <5
+    , freckle-exception
+    , hspec
+    , text
   default-language: GHC2021
   if impl(ghc >= 9.8)
     ghc-options: -Wno-missing-role-annotations -Wno-missing-poly-kind-signatures
